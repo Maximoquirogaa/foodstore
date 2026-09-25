@@ -1,0 +1,7 @@
+# spec: indice_pedido_forma_pago
+Objetivo: acelerar el filtrado de pedidos según cómo se pagaron.
+Consulta afectada: 
+SELECT id_pedido, fecha_pedido FROM pedidos WHERE forma_pago = :forma;
+Columnas candidatas: forma_pago (baja selectividad, solo 3 estados posibles).
+Criterio de aceptación: verificar si el optimizador realmente elige el índice y decidir si el costo de escritura compensa la ganancia.
+

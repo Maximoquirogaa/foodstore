@@ -1,0 +1,5 @@
+# spec: vista_pedidos_usuario
+Objetivo: exponer los pedidos junto a los datos públicos del cliente que lo generó, ocultando información sensible.
+Consulta afectada: SELECT pedidos JOIN clientes.
+Restricción de seguridad: Exponer ID, Nombre y Apellido del cliente, pero excluir explícitamente el correo_electronico (actuando como el dato sensible/contraseña según la teoría).
+

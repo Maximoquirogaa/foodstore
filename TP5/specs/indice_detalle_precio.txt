@@ -1,0 +1,7 @@
+# spec: indice_detalle_precio
+Objetivo: acelerar la localización de detalles de pedidos según su valor unitario (reportes de anomalías / alto valor). Frecuencia: media.
+Consulta afectada: 
+SELECT id_pedido, id_producto, precio_unitario FROM detalles_pedido WHERE precio_unitario > :precio;
+Columnas candidatas: precio_unitario (media selectividad).
+Criterio de aceptación: el plan evita el Parallel Seq Scan y pasa a usar un Index / Bitmap Scan.
+

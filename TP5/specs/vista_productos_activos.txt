@@ -1,0 +1,6 @@
+# spec: vista_productos_activos
+Objetivo: simplificar la lectura del catálogo ocultando productos dados de baja y resolviendo el id_categoria.
+Consulta afectada: SELECT p.id_producto, p.nombre, c.nombre, p.precio_actual FROM productos JOIN categorias.
+Columnas candidatas: ID, Nombre Producto, Nombre Categoría, Precio Actual, Stock.
+Filtro: productos.activo = TRUE.
+

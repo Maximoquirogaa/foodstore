@@ -1,0 +1,5 @@
+# spec: vista_detalles_producto
+Objetivo: reporte estándar de cada línea de pedido cruzando con el nombre descriptivo del producto.
+Consulta afectada: SELECT detalles_pedido JOIN productos.
+Columnas candidatas: id_pedido, cantidad, precio_unitario, nombre_producto.
+

@@ -1,0 +1,5 @@
+# spec: vista_mat_facturacion
+Objetivo: acelerar el reporte gerencial de facturación por categoría y mes, el cual cruza 4 tablas y agrupa cientos de miles de registros históricos.
+Consulta afectada: SELECT categoria, mes, facturacion_total cruzando categorias, productos, detalles_pedido y pedidos.
+Requisito técnico: Debe ser MATERIALIZED VIEW WITH DATA e incluir un índice único compuesto (id_categoria, mes) para permitir refrescos concurrentes sin bloquear lecturas (REFRESH MATERIALIZED VIEW CONCURRENTLY).
+

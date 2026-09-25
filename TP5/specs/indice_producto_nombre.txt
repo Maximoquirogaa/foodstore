@@ -1,0 +1,7 @@
+# spec: indice_producto_nombre
+Objetivo: acelerar la búsqueda de un producto por su nombre exacto. Frecuencia: altísima (buscador web).
+Consulta afectada: 
+SELECT id_producto, precio_actual, stock FROM productos WHERE nombre = :nombre;
+Columnas candidatas: nombre (alta selectividad).
+Criterio de aceptación: el plan debe pasar de Seq Scan a Index Scan y el tiempo debe caer por debajo de 1 milisegundo.
+
