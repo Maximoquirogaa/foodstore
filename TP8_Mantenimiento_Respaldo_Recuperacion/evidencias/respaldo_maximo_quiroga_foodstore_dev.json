@@ -1,0 +1,37 @@
+{
+    "operador":  "Maximo_Juan_Cruz_Quiroga",
+    "base_origen":  "foodstore_dev",
+    "tipo_respaldo":  "custom_pg_dump",
+    "estado":  "PASS",
+    "fecha_hora_inicio":  "2026-11-09T12:17:35.8612013-03:00",
+    "fecha_hora_fin":  "2026-11-09T12:17:36.6979253-03:00",
+    "ruta_respaldo_externa":  "C:\\Users\\Administrador\\TP8_Backups\\foodstore_dev_20261109_121735_846_bfea0f2b",
+    "archivo_dump":  "foodstore_dev_20261109_121735_846_bfea0f2b.dump",
+    "sha256":  "EEF5ECEBAEB4D5BEB27137D5B92E8A0E4038A85E3F3BAC0566112972779CD32C",
+    "tamano_bytes":  45004,
+    "validacion":  {
+                       "pg_restore_list":  true,
+                       "archivo_no_vacio":  true,
+                       "hash_verificado":  true,
+                       "conteos_baseline":  {
+                                                "categorias":  3,
+                                                "clientes":  3,
+                                                "productos":  5,
+                                                "pedidos":  5,
+                                                "detalles_pedido":  7,
+                                                "usuarios":  3
+                                            },
+                       "integridad_invalid":  {
+                                                  "producto_precio_no_positivo":  0,
+                                                  "producto_stock_negativo":  0,
+                                                  "detalle_cantidad_no_positiva":  0,
+                                                  "detalle_precio_no_positivo":  0,
+                                                  "detalle_subtotal_incorrecto":  0,
+                                                  "producto_categoria_huerfana":  0,
+                                                  "pedido_cliente_huerfano":  0,
+                                                  "detalle_pedido_huerfano":  0,
+                                                  "detalle_producto_huerfano":  0
+                                              }
+                   },
+    "observacion":  "El respaldo binario real (.dump) se conserva fuera del repositorio conforme al protocolo de seguridad del TP8. Esta evidencia documenta la ejecución del 2026-11-09 y su validación íntegra."
+}

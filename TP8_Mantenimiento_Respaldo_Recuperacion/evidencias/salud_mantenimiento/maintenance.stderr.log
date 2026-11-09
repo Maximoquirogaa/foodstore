@@ -1,0 +1,23 @@
+psql.exe : psql:C:/Users/Administrador/Documents/Trabajos 
+UTN/foodstore_github/TP8_Mantenimiento_Respaldo_Recuperacion/maintenance.sql:87: INFO:  analizando «public.categorias»
+En línea: 23 Carácter: 13
++   $stdout = & $psql -h localhost -p 5432 -U postgres -d $db -X -w -v  ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (psql:C:/Users/A...lic.categorias»:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+psql:C:/Users/Administrador/Documents/Trabajos 
+UTN/foodstore_github/TP8_Mantenimiento_Respaldo_Recuperacion/maintenance.sql:87: INFO:  «categorias»: se procesaron 1 
+de 1 páginas, que contenían 5 filas vigentes y 0 filas no vigentes; 5 filas en la muestra, 5 total de filas estimadas
+psql:C:/Users/Administrador/Documents/Trabajos 
+UTN/foodstore_github/TP8_Mantenimiento_Respaldo_Recuperacion/maintenance.sql:87: INFO:  analizando «public.usuarios»
+psql:C:/Users/Administrador/Documents/Trabajos 
+UTN/foodstore_github/TP8_Mantenimiento_Respaldo_Recuperacion/maintenance.sql:87: INFO:  «usuarios»: se procesaron 1 de 
+1 páginas, que contenían 3 filas vigentes y 0 filas no vigentes; 3 filas en la muestra, 3 total de filas estimadas
+psql:C:/Users/Administrador/Documents/Trabajos 
+UTN/foodstore_github/TP8_Mantenimiento_Respaldo_Recuperacion/maintenance.sql:87: INFO:  analizando 
+«public.mv_resumen_ventas_categoria_mes»
+psql:C:/Users/Administrador/Documents/Trabajos 
+UTN/foodstore_github/TP8_Mantenimiento_Respaldo_Recuperacion/maintenance.sql:87: INFO:  
+«mv_resumen_ventas_categoria_mes»: se procesaron 1 de 1 páginas, que contenían 65 filas vigentes y 0 filas no 
+vigentes; 65 filas en la muestra, 65 total de filas estimadas

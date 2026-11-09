@@ -1,0 +1,150 @@
+                                Lista de roles
+   Nombre de rol   |                         Atributos                         
+-------------------+-----------------------------------------------------------
+ admin_datos       | 5 conexiones
+ app_web           | 20 conexiones
+ postgres          | Superusuario, Crear rol, Crear BD, Replicacin, Ignora RLS
+ rol_app_escritura | No puede conectarse
+ rol_app_lectura   | No puede conectarse
+ rol_auditoria     | No puede conectarse
+ rol_reportes      | No puede conectarse
+ rol_soporte       | No puede conectarse
+
+      grantee      | table_schema |        table_name         | privilege_type | is_grantable 
+-------------------+--------------+---------------------------+----------------+--------------
+ admin_datos       | public       | categorias                | DELETE         | NO
+ admin_datos       | public       | categorias                | INSERT         | NO
+ admin_datos       | public       | categorias                | REFERENCES     | NO
+ admin_datos       | public       | categorias                | SELECT         | NO
+ admin_datos       | public       | categorias                | TRIGGER        | NO
+ admin_datos       | public       | categorias                | TRUNCATE       | NO
+ admin_datos       | public       | categorias                | UPDATE         | NO
+ admin_datos       | public       | clientes                  | DELETE         | NO
+ admin_datos       | public       | clientes                  | INSERT         | NO
+ admin_datos       | public       | clientes                  | REFERENCES     | NO
+ admin_datos       | public       | clientes                  | SELECT         | NO
+ admin_datos       | public       | clientes                  | TRIGGER        | NO
+ admin_datos       | public       | clientes                  | TRUNCATE       | NO
+ admin_datos       | public       | clientes                  | UPDATE         | NO
+ admin_datos       | public       | detalles_pedido           | DELETE         | NO
+ admin_datos       | public       | detalles_pedido           | INSERT         | NO
+ admin_datos       | public       | detalles_pedido           | REFERENCES     | NO
+ admin_datos       | public       | detalles_pedido           | SELECT         | NO
+ admin_datos       | public       | detalles_pedido           | TRIGGER        | NO
+ admin_datos       | public       | detalles_pedido           | TRUNCATE       | NO
+ admin_datos       | public       | detalles_pedido           | UPDATE         | NO
+ admin_datos       | public       | pedidos                   | DELETE         | NO
+ admin_datos       | public       | pedidos                   | INSERT         | NO
+ admin_datos       | public       | pedidos                   | REFERENCES     | NO
+ admin_datos       | public       | pedidos                   | SELECT         | NO
+ admin_datos       | public       | pedidos                   | TRIGGER        | NO
+ admin_datos       | public       | pedidos                   | TRUNCATE       | NO
+ admin_datos       | public       | pedidos                   | UPDATE         | NO
+ admin_datos       | public       | productos                 | DELETE         | NO
+ admin_datos       | public       | productos                 | INSERT         | NO
+ admin_datos       | public       | productos                 | REFERENCES     | NO
+ admin_datos       | public       | productos                 | SELECT         | NO
+ admin_datos       | public       | productos                 | TRIGGER        | NO
+ admin_datos       | public       | productos                 | TRUNCATE       | NO
+ admin_datos       | public       | productos                 | UPDATE         | NO
+ admin_datos       | public       | usuarios                  | DELETE         | NO
+ admin_datos       | public       | usuarios                  | INSERT         | NO
+ admin_datos       | public       | usuarios                  | REFERENCES     | NO
+ admin_datos       | public       | usuarios                  | SELECT         | NO
+ admin_datos       | public       | usuarios                  | TRIGGER        | NO
+ admin_datos       | public       | usuarios                  | TRUNCATE       | NO
+ admin_datos       | public       | usuarios                  | UPDATE         | NO
+ admin_datos       | public       | v_catalogo_productos      | DELETE         | NO
+ admin_datos       | public       | v_catalogo_productos      | INSERT         | NO
+ admin_datos       | public       | v_catalogo_productos      | REFERENCES     | NO
+ admin_datos       | public       | v_catalogo_productos      | SELECT         | NO
+ admin_datos       | public       | v_catalogo_productos      | TRIGGER        | NO
+ admin_datos       | public       | v_catalogo_productos      | TRUNCATE       | NO
+ admin_datos       | public       | v_catalogo_productos      | UPDATE         | NO
+ admin_datos       | public       | v_detalle_pedido_producto | DELETE         | NO
+ admin_datos       | public       | v_detalle_pedido_producto | INSERT         | NO
+ admin_datos       | public       | v_detalle_pedido_producto | REFERENCES     | NO
+ admin_datos       | public       | v_detalle_pedido_producto | SELECT         | NO
+ admin_datos       | public       | v_detalle_pedido_producto | TRIGGER        | NO
+ admin_datos       | public       | v_detalle_pedido_producto | TRUNCATE       | NO
+ admin_datos       | public       | v_detalle_pedido_producto | UPDATE         | NO
+ admin_datos       | public       | v_pedido_cliente          | DELETE         | NO
+ admin_datos       | public       | v_pedido_cliente          | INSERT         | NO
+ admin_datos       | public       | v_pedido_cliente          | REFERENCES     | NO
+ admin_datos       | public       | v_pedido_cliente          | SELECT         | NO
+ admin_datos       | public       | v_pedido_cliente          | TRIGGER        | NO
+ admin_datos       | public       | v_pedido_cliente          | TRUNCATE       | NO
+ admin_datos       | public       | v_pedido_cliente          | UPDATE         | NO
+ admin_datos       | public       | v_reporte_ventas_cliente  | DELETE         | NO
+ admin_datos       | public       | v_reporte_ventas_cliente  | INSERT         | NO
+ admin_datos       | public       | v_reporte_ventas_cliente  | REFERENCES     | NO
+ admin_datos       | public       | v_reporte_ventas_cliente  | SELECT         | NO
+ admin_datos       | public       | v_reporte_ventas_cliente  | TRIGGER        | NO
+ admin_datos       | public       | v_reporte_ventas_cliente  | TRUNCATE       | NO
+ admin_datos       | public       | v_reporte_ventas_cliente  | UPDATE         | NO
+ admin_datos       | public       | v_usuario_publico         | DELETE         | NO
+ admin_datos       | public       | v_usuario_publico         | INSERT         | NO
+ admin_datos       | public       | v_usuario_publico         | REFERENCES     | NO
+ admin_datos       | public       | v_usuario_publico         | SELECT         | NO
+ admin_datos       | public       | v_usuario_publico         | TRIGGER        | NO
+ admin_datos       | public       | v_usuario_publico         | TRUNCATE       | NO
+ admin_datos       | public       | v_usuario_publico         | UPDATE         | NO
+ rol_app_escritura | public       | categorias                | INSERT         | NO
+ rol_app_escritura | public       | categorias                | UPDATE         | NO
+ rol_app_escritura | public       | clientes                  | INSERT         | NO
+ rol_app_escritura | public       | clientes                  | UPDATE         | NO
+ rol_app_escritura | public       | detalles_pedido           | INSERT         | NO
+ rol_app_escritura | public       | detalles_pedido           | UPDATE         | NO
+ rol_app_escritura | public       | pedidos                   | INSERT         | NO
+ rol_app_escritura | public       | pedidos                   | UPDATE         | NO
+ rol_app_escritura | public       | productos                 | INSERT         | NO
+ rol_app_escritura | public       | productos                 | UPDATE         | NO
+ rol_app_lectura   | public       | categorias                | SELECT         | NO
+ rol_app_lectura   | public       | clientes                  | SELECT         | NO
+ rol_app_lectura   | public       | detalles_pedido           | SELECT         | NO
+ rol_app_lectura   | public       | pedidos                   | SELECT         | NO
+ rol_app_lectura   | public       | productos                 | SELECT         | NO
+ rol_app_lectura   | public       | v_catalogo_productos      | SELECT         | NO
+ rol_app_lectura   | public       | v_detalle_pedido_producto | SELECT         | NO
+ rol_app_lectura   | public       | v_pedido_cliente          | SELECT         | NO
+ rol_reportes      | public       | v_reporte_ventas_cliente  | SELECT         | NO
+ rol_reportes      | public       | v_usuario_publico         | SELECT         | NO
+(97 filas)
+
+   grantee   | table_name |    column_name     | privilege_type 
+-------------+------------+--------------------+----------------
+ rol_soporte | usuarios   | activo             | SELECT
+ rol_soporte | usuarios   | activo             | UPDATE
+ rol_soporte | usuarios   | apellido           | SELECT
+ rol_soporte | usuarios   | correo_electronico | SELECT
+ rol_soporte | usuarios   | fecha_creacion     | SELECT
+ rol_soporte | usuarios   | id_usuario         | SELECT
+ rol_soporte | usuarios   | nombre             | SELECT
+ rol_soporte | usuarios   | rol                | SELECT
+ rol_soporte | usuarios   | telefono           | SELECT
+(9 filas)
+
+      grantee      |     routine_name     | privilege_type 
+-------------------+----------------------+----------------
+ admin_datos       | fn_autenticar        | EXECUTE
+ admin_datos       | fn_resetear_password | EXECUTE
+ postgres          | fn_autenticar        | EXECUTE
+ postgres          | fn_resetear_password | EXECUTE
+ rol_app_escritura | fn_autenticar        | EXECUTE
+ rol_soporte       | fn_resetear_password | EXECUTE
+(6 filas)
+
+  login  |    miembro_de     
+---------+-------------------
+ app_web | rol_app_escritura
+ app_web | rol_app_lectura
+(2 filas)
+
+ para_objetos_de | tipo |                            defaclacl                             
+-----------------+------+------------------------------------------------------------------
+ admin_datos     | S    | {rol_app_escritura=rU/admin_datos}
+ admin_datos     | r    | {rol_app_lectura=r/admin_datos,rol_app_escritura=aw/admin_datos}
+ postgres        | S    | {rol_app_escritura=rU/postgres}
+ postgres        | r    | {rol_app_lectura=r/postgres,rol_app_escritura=aw/postgres}
+(4 filas)
+

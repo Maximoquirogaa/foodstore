@@ -1,0 +1,31 @@
+{
+    "counts":  {
+                   "categorias":  5,
+                   "clientes":  20000,
+                   "productos":  50000,
+                   "pedidos":  200000,
+                   "detalles_pedido":  200000,
+                   "usuarios":  3
+               },
+    "invalid":  {
+                    "producto_precio_no_positivo":  0,
+                    "producto_stock_negativo":  0,
+                    "detalle_cantidad_no_positiva":  0,
+                    "detalle_precio_no_positivo":  0,
+                    "detalle_subtotal_incorrecto":  0,
+                    "producto_categoria_huerfana":  0,
+                    "pedido_cliente_huerfano":  0,
+                    "detalle_pedido_huerfano":  0,
+                    "detalle_producto_huerfano":  0
+                },
+    "precio_columns":  [
+                           "precio_actual"
+                       ],
+    "objects":  {
+                    "tables":  6,
+                    "views":  5,
+                    "materialized_views":  1,
+                    "constraints":  52,
+                    "indexes":  13
+                }
+}

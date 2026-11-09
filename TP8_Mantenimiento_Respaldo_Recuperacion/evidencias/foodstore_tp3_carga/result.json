@@ -1,0 +1,47 @@
+{
+    "source":  "foodstore_tp3_carga",
+    "destination":  "foodstore_restore_test",
+    "backup_start":  "2026-11-09T12:17:40.7598005-03:00",
+    "backup_end":  "2026-11-09T12:17:42.3210501-03:00",
+    "drill_start":  "2026-11-09T12:17:42.4791921-03:00",
+    "validation_end":  "2026-11-09T12:17:46.5981715-03:00",
+    "backup_seconds":  1.5612496,
+    "rto_seconds":  4.1190372,
+    "rpo_proxy_seconds":  1.7193916,
+    "rpo_note":  "Age of backup start at recovery start; freshness proxy, not measured data loss or guaranteed RPO.",
+    "dump_bytes":  6021693,
+    "dump_sha256":  "B0FB26DB147ACB9985D9447ADE8CE3E6948CCC23E2316DB30BA41840306331D6",
+    "validation":  "PASS",
+    "metrics":  {
+                    "counts":  {
+                                   "categorias":  5,
+                                   "clientes":  20000,
+                                   "productos":  50000,
+                                   "pedidos":  200000,
+                                   "detalles_pedido":  200000,
+                                   "usuarios":  3
+                               },
+                    "invalid":  {
+                                    "producto_precio_no_positivo":  0,
+                                    "producto_stock_negativo":  0,
+                                    "detalle_cantidad_no_positiva":  0,
+                                    "detalle_precio_no_positivo":  0,
+                                    "detalle_subtotal_incorrecto":  0,
+                                    "producto_categoria_huerfana":  0,
+                                    "pedido_cliente_huerfano":  0,
+                                    "detalle_pedido_huerfano":  0,
+                                    "detalle_producto_huerfano":  0
+                                },
+                    "precio_columns":  [
+                                           "precio_actual"
+                                       ],
+                    "objects":  {
+                                    "tables":  6,
+                                    "views":  5,
+                                    "materialized_views":  1,
+                                    "constraints":  52,
+                                    "indexes":  13
+                                }
+                },
+    "destination_retained":  true
+}

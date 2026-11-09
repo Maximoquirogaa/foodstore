@@ -1,0 +1,124 @@
+TP7-D COBERTURA: evidencia de ejecucion transaccional (una sola pasada con ROLLBACK)
+RESPALDO
+{
+  "path": "scratch/respaldo_foodstore_dev_20261109_121409_antes_tp7_d.dump",
+  "size": 45004,
+  "sha256": "2cf91163ac986fa4fc41e867ed0581ce12504fae1a05a8e150129a9d4e147bd8",
+  "pg_dump_exit": 0,
+  "pg_restore_list_exit": 0,
+  "list_lines": 144,
+  "database_header_confirmed": true
+}
+PREVIO (sesion de solo lectura, BEGIN READ ONLY / ROLLBACK, PSQL_EXIT=0)
+{
+    "identity":  {
+                     "database":  "foodstore_dev",
+                     "user":  "postgres",
+                     "session":  "postgres",
+                     "version":  "17.11",
+                     "server":  "127.0.0.1/32",
+                     "port":  5432,
+                     "read_only":  "on"
+                 },
+    "counts":  {
+                   "categorias":  3,
+                   "clientes":  3,
+                   "pedidos":  5,
+                   "productos":  5,
+                   "detalles_pedido":  7,
+                   "usuarios":  3
+               },
+    "sequences":  {
+                      "categorias_id_categoria_seq":  {
+                                                          "last_value":  4,
+                                                          "is_called":  true
+                                                      },
+                      "clientes_id_cliente_seq":  {
+                                                      "last_value":  3,
+                                                      "is_called":  true
+                                                  },
+                      "pedidos_id_pedido_seq":  {
+                                                    "last_value":  5,
+                                                    "is_called":  true
+                                                },
+                      "productos_id_producto_seq":  {
+                                                        "last_value":  5,
+                                                        "is_called":  true
+                                                    },
+                      "usuarios_id_usuario_seq":  {
+                                                      "last_value":  3,
+                                                      "is_called":  true
+                                                  }
+                  }
+}
+EJECUCION (psql -X -w -f TP7_Administracion_y_Seguridad/sql/usuario_anon_cobertura.sql)
+BEGIN
+SET
+SET
+DO
+LOCK TABLE
+CREATE TABLE
+INSERT 0 6
+INSERT 0 6
+CREATE TABLE AS
+INSERT 0 9
+   rol    |  mes_alta  | cantidad 
+----------+------------+----------
+ ADMIN    | 2026-01-01 |        2
+ ADMIN    | 2026-11-01 |        1
+ VENDEDOR | 2026-02-01 |        2
+ VENDEDOR | 2026-11-01 |        1
+ USUARIO  | 2026-03-01 |        2
+ USUARIO  | 2026-11-01 |        1
+(6 filas)
+
+   rol    |  mes_alta  | cantidad 
+----------+------------+----------
+ ADMIN    | 2026-01-01 |        2
+ ADMIN    | 2026-11-01 |        1
+ VENDEDOR | 2026-02-01 |        2
+ VENDEDOR | 2026-11-01 |        1
+ USUARIO  | 2026-03-01 |        2
+ USUARIO  | 2026-11-01 |        1
+(6 filas)
+
+psql:TP7_Administracion_y_Seguridad/sql/usuario_anon_cobertura.sql:98: NOTICE:  Comparación con fixtures validada con éxito: diferencias 0/0, totales 9/9
+DO
+ROLLBACK
+PSQL_EXIT=0
+POSTERIOR (sesion nueva de solo lectura, BEGIN READ ONLY / ROLLBACK, PSQL_EXIT=0)
+{
+    "post_read_only":  true,
+    "usuario_anon_absent":  true,
+    "counts":  {
+                   "categorias":  3,
+                   "clientes":  3,
+                   "pedidos":  5,
+                   "productos":  5,
+                   "detalles_pedido":  7,
+                   "usuarios":  3
+               },
+    "sequences":  {
+                      "categorias_id_categoria_seq":  {
+                                                          "last_value":  4,
+                                                          "is_called":  true
+                                                      },
+                      "clientes_id_cliente_seq":  {
+                                                      "last_value":  3,
+                                                      "is_called":  true
+                                                  },
+                      "pedidos_id_pedido_seq":  {
+                                                    "last_value":  5,
+                                                    "is_called":  true
+                                                },
+                      "productos_id_producto_seq":  {
+                                                        "last_value":  5,
+                                                        "is_called":  true
+                                                    },
+                      "usuarios_id_usuario_seq":  {
+                                                      "last_value":  3,
+                                                      "is_called":  true
+                                                  }
+                  },
+    "app_web_is_admin":  false
+}

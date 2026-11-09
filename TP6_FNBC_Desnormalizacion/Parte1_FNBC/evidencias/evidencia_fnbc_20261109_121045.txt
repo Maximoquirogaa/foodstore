@@ -1,0 +1,199 @@
+-- ============================================================================
+-- EVIDENCIA DE EJECUCIÓN - TP6 PARTE 1 (FNBC EN CONTROL DE LOTES)
+-- Base: foodstore_copia_trabajo | Motor: PostgreSQL 17.11
+-- Fecha: 2026-11-09 12:10:47 -03:00
+-- Comando: psql -w -h localhost -p 5432 -U postgres -d foodstore_copia_trabajo -v ON_ERROR_STOP=1 -e -f TP6_FNBC_Desnormalizacion/Parte1_FNBC/tp_fnbc_control_lote.sql
+-- ============================================================================
+
+BEGIN;
+BEGIN
+DO $$
+DECLARE
+    v_nombre TEXT;
+    v_usuario_oid OID;
+BEGIN
+    -- Comprobamos existencia de la tabla usuarios (de TP7 / TP5)
+    SELECT c.oid
+      INTO v_usuario_oid
+      FROM pg_catalog.pg_class AS c
+      JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace
+     WHERE n.nspname = 'public'
+       AND c.relname = 'usuarios'
+       AND c.relkind IN ('r', 'p');
+
+    IF v_usuario_oid IS NULL THEN
+        RAISE EXCEPTION 'No existe la tabla public.usuarios. Revisar esquema antes de continuar.';
+    END IF;
+
+    -- Verificar que no existan objetos previos con nombres que utilizaremos
+    SELECT c.relname
+      INTO v_nombre
+      FROM pg_catalog.pg_class AS c
+      JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace
+     WHERE n.nspname = 'public'
+       AND c.relname IN (
+           'lotes',
+           'depositos',
+           'control_lote_almacen',
+           'responsable_deposito',
+           'control_lote',
+           'v_control_lote_almacen'
+       )
+     ORDER BY c.relname
+     LIMIT 1;
+
+    IF v_nombre IS NOT NULL THEN
+        RAISE EXCEPTION 'Ya existe el objeto public.%. Se detiene la prueba para evitar colisiones.', v_nombre;
+    END IF;
+END;
+$$;
+DO
+LOCK TABLE public.usuarios IN SHARE ROW EXCLUSIVE MODE NOWAIT;
+LOCK TABLE
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM public.usuarios WHERE id_usuario IN (801, 802)) THEN
+        RAISE EXCEPTION 'Conflicto: ya existen usuarios con IDs 801 o 802 en usuarios.';
+    END IF;
+END;
+$$;
+DO
+CREATE TABLE public.lotes (
+    id_lote BIGINT PRIMARY KEY
+);
+CREATE TABLE
+CREATE TABLE public.depositos (
+    id_deposito BIGINT PRIMARY KEY
+);
+CREATE TABLE
+CREATE TABLE public.control_lote_almacen (
+    id_lote BIGINT NOT NULL,
+    id_deposito BIGINT NOT NULL,
+    id_responsable_control BIGINT NOT NULL,
+    CONSTRAINT pk_control_lote_almacen
+        PRIMARY KEY (id_lote, id_deposito),
+    CONSTRAINT fk_cla_lote
+        FOREIGN KEY (id_lote)
+        REFERENCES public.lotes (id_lote)
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_cla_deposito
+        FOREIGN KEY (id_deposito)
+        REFERENCES public.depositos (id_deposito)
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_cla_responsable
+        FOREIGN KEY (id_responsable_control)
+        REFERENCES public.usuarios (id_usuario)
+        ON DELETE RESTRICT
+);
+CREATE TABLE
+INSERT INTO public.lotes (id_lote) VALUES (501), (502), (503);
+INSERT 0 3
+INSERT INTO public.depositos (id_deposito) VALUES (30), (31);
+INSERT 0 2
+INSERT INTO public.usuarios (
+    id_usuario,
+    nombre,
+    apellido,
+    correo_electronico,
+    telefono,
+    contrasena,
+    rol,
+    activo
+)
+OVERRIDING SYSTEM VALUE
+VALUES
+(801, 'Responsable', 'Prueba801', 'responsable801.fnbc@utn.edu.ar', NULL, 'HASH_PRUEBA_801', 'USUARIO', TRUE),
+(802, 'Responsable', 'Prueba802', 'responsable802.fnbc@utn.edu.ar', NULL, 'HASH_PRUEBA_802', 'USUARIO', TRUE);
+INSERT 0 2
+INSERT INTO public.control_lote_almacen (id_lote, id_deposito, id_responsable_control)
+VALUES
+    (501, 30, 801),
+    (502, 30, 801), -- El responsable 801 repite su asociación al depósito 30
+    (503, 31, 802);
+INSERT 0 3
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT id_responsable_control
+          FROM public.control_lote_almacen
+         GROUP BY id_responsable_control
+        HAVING COUNT(DISTINCT id_deposito) > 1
+    ) THEN
+        RAISE EXCEPTION 'La relación original viola id_responsable_control -> id_deposito.';
+    END IF;
+END;
+$$;
+DO
+CREATE TABLE public.responsable_deposito (
+    id_responsable_control BIGINT NOT NULL,
+    id_deposito BIGINT NOT NULL,
+    CONSTRAINT pk_responsable_deposito
+        PRIMARY KEY (id_responsable_control),
+    CONSTRAINT fk_rd_responsable
+        FOREIGN KEY (id_responsable_control)
+        REFERENCES public.usuarios (id_usuario)
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_rd_deposito
+        FOREIGN KEY (id_deposito)
+        REFERENCES public.depositos (id_deposito)
+        ON DELETE RESTRICT
+);
+CREATE TABLE
+CREATE TABLE public.control_lote (
+    id_lote BIGINT NOT NULL,
+    id_responsable_control BIGINT NOT NULL,
+    CONSTRAINT pk_control_lote
+        PRIMARY KEY (id_lote, id_responsable_control),
+    CONSTRAINT fk_cl_lote
+        FOREIGN KEY (id_lote)
+        REFERENCES public.lotes (id_lote)
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_cl_responsable_deposito
+        FOREIGN KEY (id_responsable_control)
+        REFERENCES public.responsable_deposito (id_responsable_control)
+        ON DELETE RESTRICT
+);
+CREATE TABLE
+INSERT INTO public.responsable_deposito (id_responsable_control, id_deposito)
+SELECT DISTINCT id_responsable_control, id_deposito
+FROM public.control_lote_almacen;
+INSERT 0 2
+INSERT INTO public.control_lote (id_lote, id_responsable_control)
+SELECT DISTINCT id_lote, id_responsable_control
+FROM public.control_lote_almacen;
+INSERT 0 3
+CREATE VIEW public.v_control_lote_almacen AS
+SELECT
+    cl.id_lote,
+    rd.id_deposito,
+    cl.id_responsable_control
+FROM public.control_lote cl
+JOIN public.responsable_deposito rd
+  ON rd.id_responsable_control = cl.id_responsable_control;
+CREATE VIEW
+DO $$
+DECLARE
+    v_diff INTEGER;
+BEGIN
+    SELECT COUNT(*) INTO v_diff
+    FROM (
+        (SELECT id_lote, id_deposito, id_responsable_control FROM public.control_lote_almacen
+         EXCEPT
+         SELECT id_lote, id_deposito, id_responsable_control FROM public.v_control_lote_almacen)
+        UNION ALL
+        (SELECT id_lote, id_deposito, id_responsable_control FROM public.v_control_lote_almacen
+         EXCEPT
+         SELECT id_lote, id_deposito, id_responsable_control FROM public.control_lote_almacen)
+    ) t;
+
+    IF v_diff <> 0 THEN
+        RAISE EXCEPTION 'La descomposición sufrió pérdida de información. Diferencias: %', v_diff;
+    ELSE
+        RAISE NOTICE 'VALIDACIÓN EXITOSA: Descomposición en FNBC con reunión sin pérdida confirmada (0 filas de diferencia).';
+    END IF;
+END;
+$$;
+DO
+ROLLBACK;
+psql:TP6_FNBC_Desnormalizacion/Parte1_FNBC/tp_fnbc_control_lote.sql:249: NOTICE:  VALIDACIÓN EXITOSA: Descomposición en FNBC con reunión sin pérdida confirmada (0 filas de diferencia).
+ROLLBACK

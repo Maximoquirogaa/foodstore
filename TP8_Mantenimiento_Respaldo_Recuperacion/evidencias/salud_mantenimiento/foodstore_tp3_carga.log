@@ -1,0 +1,72 @@
+El paginador no se usará.
+Despliegue de nulos es «(NULL)».
+BEGIN
+        base         |             fecha             |                                  motor                                   
+---------------------+-------------------------------+--------------------------------------------------------------------------
+ foodstore_tp3_carga | 2026-11-09 12:19:41.496114-03 | PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit
+(1 fila)
+
+        base         |  bytes   | tamano_legible 
+---------------------+----------+----------------
+ foodstore_tp3_carga | 58537651 | 56 MB
+(1 fila)
+
+       datname       | numbackends | xact_commit | xact_rollback | blks_read | blks_hit | cache_hit_ratio | tup_returned | tup_fetched | tup_inserted | tup_updated | tup_deleted | deadlocks | stats_reset 
+---------------------+-------------+-------------+---------------+-----------+----------+-----------------+--------------+-------------+--------------+-------------+-------------+-----------+-------------
+ foodstore_tp3_carga |           1 |         184 |             3 |     15114 | 11928494 |           99.87 |      9213458 |     1278268 |       471225 |      200208 |         323 |         0 | (NULL)
+(1 fila)
+
+ state  | total_conexiones 
+--------+------------------
+ active |                1
+(1 fila)
+
+ schemaname |             relname             | n_live_tup | n_dead_tup | n_mod_since_analyze | last_vacuum |        last_autovacuum        |         last_analyze          |       last_autoanalyze        | vacuum_count | autovacuum_count | analyze_count | autoanalyze_count 
+------------+---------------------------------+------------+------------+---------------------+-------------+-------------------------------+-------------------------------+-------------------------------+--------------+------------------+---------------+-------------------
+ public     | categorias                      |          5 |          0 |                   0 | (NULL)      | (NULL)                        | 2026-11-09 12:16:35.628137-03 | (NULL)                        |            0 |                0 |             2 |                 0
+ public     | clientes                        |      20000 |          0 |                   0 | (NULL)      | 2026-11-09 12:09:26.141214-03 | 2026-11-09 12:16:36.418163-03 | 2026-11-09 12:09:26.816487-03 |            0 |                1 |             2 |                 1
+ public     | detalles_pedido                 |     200000 |          0 |                   0 | (NULL)      | 2026-11-09 12:09:31.840276-03 | 2026-11-09 12:16:38.897556-03 | 2026-11-09 12:09:32.09806-03  |            0 |                1 |             2 |                 1
+ public     | mv_resumen_ventas_categoria_mes |         65 |          0 |                   0 | (NULL)      | (NULL)                        | 2026-11-09 12:16:39.830339-03 | 2026-11-09 12:17:29.488046-03 |            0 |                0 |             1 |                 2
+ public     | pedidos                         |     200000 |          0 |                   0 | (NULL)      | 2026-11-09 12:09:29.111969-03 | 2026-11-09 12:16:38.106234-03 | 2026-11-09 12:09:29.303093-03 |            0 |                1 |             2 |                 1
+ public     | productos                       |      50000 |          0 |                   0 | (NULL)      | 2026-11-09 12:09:24.95162-03  | 2026-11-09 12:16:37.2661-03   | 2026-11-09 12:09:25.675943-03 |            0 |                1 |             2 |                 1
+ public     | usuarios                        |          3 |          0 |                   0 | (NULL)      | (NULL)                        | 2026-11-09 12:16:39.020537-03 | (NULL)                        |            0 |                0 |             1 |                 0
+(7 filas)
+
+ schemaname |             relname             | tamano_total |  bytes   
+------------+---------------------------------+--------------+----------
+ public     | pedidos                         | 18 MB        | 18432000
+ public     | detalles_pedido                 | 18 MB        | 18374656
+ public     | productos                       | 9104 kB      |  9322496
+ public     | clientes                        | 3768 kB      |  3858432
+ public     | usuarios                        | 48 kB        |    49152
+ public     | mv_resumen_ventas_categoria_mes | 32 kB        |    32768
+ public     | categorias                      | 24 kB        |    24576
+(7 filas)
+
+ pid | usename | application_name | state | duracion | wait_event_type | wait_event 
+-----+---------+------------------+-------+----------+-----------------+------------
+(0 filas)
+
+              name               | setting |  unit  | source  
+---------------------------------+---------+--------+---------
+ autovacuum                      | on      | (NULL) | default
+ autovacuum_analyze_scale_factor | 0.1     | (NULL) | default
+ autovacuum_analyze_threshold    | 50      | (NULL) | default
+ autovacuum_max_workers          | 3       | (NULL) | default
+ autovacuum_naptime              | 60      | s      | default
+ autovacuum_vacuum_scale_factor  | 0.2     | (NULL) | default
+ autovacuum_vacuum_threshold     | 50      | (NULL) | default
+ track_counts                    | on      | (NULL) | default
+(8 filas)
+
+ esquema |      tabla      | opciones_especificas 
+---------+-----------------+----------------------
+ public  | categorias      | (NULL)
+ public  | clientes        | (NULL)
+ public  | detalles_pedido | (NULL)
+ public  | pedidos         | (NULL)
+ public  | productos       | (NULL)
+ public  | usuarios        | (NULL)
+(6 filas)
+
+ROLLBACK

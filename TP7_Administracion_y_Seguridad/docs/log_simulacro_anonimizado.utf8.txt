@@ -1,0 +1,207 @@
+2026-11-09 12:11:38.855 -03 [52832] [desconocido]@[desconocido] 198.51.100.7(40001) [desconocido] LOG:  conexión recibida: host=198.51.100.7 port=40001
+2026-11-09 12:11:38.872 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) [desconocido] LOG:  conexión autenticada: identidad=«postgres» método=scram-sha-256 (C:/Program Files/PostgreSQL/17/data/pg_hba.conf:115)
+2026-11-09 12:11:38.872 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) [desconocido] LOG:  conexión autorizada: usuario=postgres base_de_datos=foodstore_dev nombre_de_aplicación=psql
+2026-11-09 12:11:38.876 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  sentencia: BEGIN;
+2026-11-09 12:11:38.876 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  sentencia: SET LOCAL search_path TO public, pg_temp;
+2026-11-09 12:11:38.876 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  sentencia: DO $$
+	BEGIN
+	  IF to_regprocedure('public.fn_autenticar(varchar,varchar)') IS NULL THEN
+	    RAISE EXCEPTION 'Prerrequisito ausente: función fn_autenticar no encontrada.';
+	  END IF;
+	  IF to_regclass('public.usuarios') IS NULL THEN
+	    RAISE EXCEPTION 'Prerrequisito ausente: tabla public.usuarios no encontrada.';
+	  END IF;
+	  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'app_web') THEN
+	    RAISE EXCEPTION 'Prerrequisito ausente: rol app_web no encontrado.';
+	  END IF;
+	  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'admin_datos') THEN
+	    RAISE EXCEPTION 'Prerrequisito ausente: rol admin_datos no encontrado.';
+	  END IF;
+	END
+	$$;
+2026-11-09 12:11:38.884 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  sentencia: SELECT 'SIMULACRO_INCIDENTE_INICIO_C' AS marca, clock_timestamp() AS ts;
+2026-11-09 12:11:38.885 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  sentencia: DO $$
+	DECLARE
+	  v_res BIGINT;
+	BEGIN
+	  -- Intento 1
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_01') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 1 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	
+	  -- Intento 2
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_02') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 2 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	
+	  -- Intento 3
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_03') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 3 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	END
+	$$;
+2026-11-09 12:11:39.138 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  SIMULACRO C: Intento 1 fallido para usuario_anon_01@anon.invalid (resultado=NULL)
+2026-11-09 12:11:39.138 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql CONTEXTO:  función PL/pgSQL inline_code_block en la línea 8 en RAISE
+2026-11-09 12:11:39.138 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql SENTENCIA:  DO $$
+	DECLARE
+	  v_res BIGINT;
+	BEGIN
+	  -- Intento 1
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_01') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 1 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	
+	  -- Intento 2
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_02') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 2 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	
+	  -- Intento 3
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_03') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 3 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	END
+	$$;
+2026-11-09 12:11:39.376 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  SIMULACRO C: Intento 2 fallido para usuario_anon_01@anon.invalid (resultado=NULL)
+2026-11-09 12:11:39.376 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql CONTEXTO:  función PL/pgSQL inline_code_block en la línea 13 en RAISE
+2026-11-09 12:11:39.376 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql SENTENCIA:  DO $$
+	DECLARE
+	  v_res BIGINT;
+	BEGIN
+	  -- Intento 1
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_01') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 1 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	
+	  -- Intento 2
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_02') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 2 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	
+	  -- Intento 3
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_03') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 3 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	END
+	$$;
+2026-11-09 12:11:39.623 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  SIMULACRO C: Intento 3 fallido para usuario_anon_01@anon.invalid (resultado=NULL)
+2026-11-09 12:11:39.623 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql CONTEXTO:  función PL/pgSQL inline_code_block en la línea 18 en RAISE
+2026-11-09 12:11:39.623 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql SENTENCIA:  DO $$
+	DECLARE
+	  v_res BIGINT;
+	BEGIN
+	  -- Intento 1
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_01') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 1 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	
+	  -- Intento 2
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_02') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 2 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	
+	  -- Intento 3
+	  SELECT public.fn_autenticar('usuario_anon_01@anon.invalid', 'clave_erronea_anon_03') INTO v_res;
+	  IF v_res IS NOT NULL THEN RAISE EXCEPTION 'Fallo en la prueba: se esperaba NULL'; END IF;
+	  RAISE LOG 'SIMULACRO C: Intento 3 fallido para usuario_anon_01@anon.invalid (resultado=NULL)';
+	END
+	$$;
+2026-11-09 12:11:39.623 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  sentencia: DO $$
+	DECLARE
+	  v_uid BIGINT;
+	  v_email TEXT;
+	BEGIN
+	  SELECT id_usuario, correo_electronico INTO v_uid, v_email
+	  FROM public.usuarios
+	  WHERE activo = TRUE
+	  ORDER BY id_usuario
+	  LIMIT 1;
+	
+	  IF v_uid IS NOT NULL THEN
+	    RAISE LOG 'SIMULACRO C: Autenticación exitosa confirmada para usuario ID=% (%)', v_uid, v_email;
+	    RAISE NOTICE 'SIMULACRO C: Login exitoso para ID=%', v_uid;
+	  END IF;
+	END
+	$$;
+2026-11-09 12:11:39.624 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  SIMULACRO C: Autenticación exitosa confirmada para usuario ID=1 (usuario_anon_01@anon.invalid)
+2026-11-09 12:11:39.624 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql CONTEXTO:  función PL/pgSQL inline_code_block en la línea 13 en RAISE
+2026-11-09 12:11:39.624 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql SENTENCIA:  DO $$
+	DECLARE
+	  v_uid BIGINT;
+	  v_email TEXT;
+	BEGIN
+	  SELECT id_usuario, correo_electronico INTO v_uid, v_email
+	  FROM public.usuarios
+	  WHERE activo = TRUE
+	  ORDER BY id_usuario
+	  LIMIT 1;
+	
+	  IF v_uid IS NOT NULL THEN
+	    RAISE LOG 'SIMULACRO C: Autenticación exitosa confirmada para usuario ID=% (%)', v_uid, v_email;
+	    RAISE NOTICE 'SIMULACRO C: Login exitoso para ID=%', v_uid;
+	  END IF;
+	END
+	$$;
+2026-11-09 12:11:39.624 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  sentencia: DO $$
+	DECLARE
+	  v_cant INTEGER;
+	BEGIN
+	  SELECT count(*) INTO v_cant
+	  FROM public.usuarios
+	  WHERE activo = TRUE;
+	
+	  RAISE LOG 'SIMULACRO C: Lectura masiva realizada sobre % registros de usuarios', v_cant;
+	  RAISE NOTICE 'SIMULACRO C: Registros consultados: %', v_cant;
+	END
+	$$;
+2026-11-09 12:11:39.624 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  SIMULACRO C: Lectura masiva realizada sobre 3 registros de usuarios
+2026-11-09 12:11:39.624 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql CONTEXTO:  función PL/pgSQL inline_code_block en la línea 9 en RAISE
+2026-11-09 12:11:39.624 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql SENTENCIA:  DO $$
+	DECLARE
+	  v_cant INTEGER;
+	BEGIN
+	  SELECT count(*) INTO v_cant
+	  FROM public.usuarios
+	  WHERE activo = TRUE;
+	
+	  RAISE LOG 'SIMULACRO C: Lectura masiva realizada sobre % registros de usuarios', v_cant;
+	  RAISE NOTICE 'SIMULACRO C: Registros consultados: %', v_cant;
+	END
+	$$;
+2026-11-09 12:11:39.625 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  sentencia: DO $$
+	BEGIN
+	  BEGIN
+	    SET LOCAL ROLE app_web;
+	    GRANT admin_datos TO app_web;
+	    RESET ROLE;
+	    -- Si la línea anterior tiene éxito, significa que hay un fallo crítico de seguridad
+	    RAISE EXCEPTION 'HALLAZGO CRÍTICO: El escalamiento tuvo éxito. El modelo de seguridad falló.';
+	  EXCEPTION
+	    WHEN insufficient_privilege THEN
+	      RESET ROLE;
+	      RAISE LOG 'SIMULACRO C: Escalamiento RECHAZADO satisfactoriamente (SQLSTATE 42501: privilegios insuficientes)';
+	      RAISE NOTICE 'SIMULACRO C: Escalamiento bloqueado por el motor (42501).';
+	  END;
+	END
+	$$;
+2026-11-09 12:11:39.625 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  SIMULACRO C: Escalamiento RECHAZADO satisfactoriamente (SQLSTATE 42501: privilegios insuficientes)
+2026-11-09 12:11:39.625 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql CONTEXTO:  función PL/pgSQL inline_code_block en la línea 12 en RAISE
+2026-11-09 12:11:39.625 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql SENTENCIA:  DO $$
+	BEGIN
+	  BEGIN
+	    SET LOCAL ROLE app_web;
+	    GRANT admin_datos TO app_web;
+	    RESET ROLE;
+	    -- Si la línea anterior tiene éxito, significa que hay un fallo crítico de seguridad
+	    RAISE EXCEPTION 'HALLAZGO CRÍTICO: El escalamiento tuvo éxito. El modelo de seguridad falló.';
+	  EXCEPTION
+	    WHEN insufficient_privilege THEN
+	      RESET ROLE;
+	      RAISE LOG 'SIMULACRO C: Escalamiento RECHAZADO satisfactoriamente (SQLSTATE 42501: privilegios insuficientes)';
+	      RAISE NOTICE 'SIMULACRO C: Escalamiento bloqueado por el motor (42501).';
+	  END;
+	END
+	$$;
+2026-11-09 12:11:39.625 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  sentencia: SELECT 'SIMULACRO_INCIDENTE_FIN_C' AS marca, clock_timestamp() AS ts;
+2026-11-09 12:11:39.626 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  sentencia: ROLLBACK;
+2026-11-09 12:11:39.626 -03 [52832] postgres@foodstore_dev 198.51.100.7(40001) psql LOG:  desconexión: duración de sesión: 0:00:00.788 usuario=postgres base=foodstore_dev host=198.51.100.7 port=40001

@@ -1,0 +1,50 @@
+El paginador no se usará.
+DO
+SET
+SET
+          base          |     inicio_mantenimiento      
+------------------------+-------------------------------
+ foodstore_restore_test | 2026-11-09 12:17:48.103861-03
+(1 fila)
+
+ schemaname |             relname             | n_live_tup | n_dead_tup | n_mod_since_analyze | last_vacuum |        last_autovacuum        | last_analyze |       last_autoanalyze        
+------------+---------------------------------+------------+------------+---------------------+-------------+-------------------------------+--------------+-------------------------------
+ public     | categorias                      |          5 |          0 |                   5 |             |                               |              | 
+ public     | clientes                        |      20000 |          0 |               20000 |             |                               |              | 
+ public     | detalles_pedido                 |     200000 |          0 |                   0 |             | 2026-11-09 12:17:47.632597-03 |              | 2026-11-09 12:17:47.835102-03
+ public     | mv_resumen_ventas_categoria_mes |         65 |          0 |                   0 |             |                               |              | 2026-11-09 12:17:47.401761-03
+ public     | pedidos                         |     200000 |          0 |              200000 |             | 2026-11-09 12:17:48.07019-03  |              | 
+ public     | productos                       |      50000 |          0 |               50000 |             |                               |              | 
+ public     | usuarios                        |          3 |          0 |                   3 |             |                               |              | 
+(7 filas)
+
+            relacion             | tuplas_estimadas | columnas_con_estadisticas 
+---------------------------------+------------------+---------------------------
+ categorias                      |                5 |                         0
+ mv_resumen_ventas_categoria_mes |               65 |                         6
+ usuarios                        |                3 |                         0
+(3 filas)
+
+DO
+Conteos previos capturados: categoria=5 usuario=3 vista_materializada=65
+DO
+ schemaname |             relname             | n_live_tup | n_dead_tup | n_mod_since_analyze | last_vacuum | last_autovacuum |         last_analyze          |       last_autoanalyze        
+------------+---------------------------------+------------+------------+---------------------+-------------+-----------------+-------------------------------+-------------------------------
+ public     | categorias                      |          5 |          0 |                   0 |             |                 | 2026-11-09 12:17:48.136555-03 | 
+ public     | mv_resumen_ventas_categoria_mes |         65 |          0 |                   0 |             |                 | 2026-11-09 12:17:48.137981-03 | 2026-11-09 12:17:47.401761-03
+ public     | usuarios                        |          3 |          0 |                   0 |             |                 | 2026-11-09 12:17:48.13728-03  | 
+(3 filas)
+
+VALIDACION EXITOSA: Los conteos exactos de filas fueron rigurosamente preservados.
+            relacion             | tuplas_estimadas | columnas_con_estadisticas 
+---------------------------------+------------------+---------------------------
+ categorias                      |                5 |                         4
+ mv_resumen_ventas_categoria_mes |               65 |                         6
+ usuarios                        |                3 |                         9
+(3 filas)
+
+          base          |       fin_mantenimiento       
+------------------------+-------------------------------
+ foodstore_restore_test | 2026-11-09 12:17:48.142073-03
+(1 fila)
+

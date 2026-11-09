@@ -1,0 +1,91 @@
+-- ============================================================================
+-- EVIDENCIA DE EJECUCIÓN - TP6 PARTE 2: MEDICIÓN INICIAL NORMALIZADA
+-- Base: foodstore_copia_trabajo | Motor: PostgreSQL 17.11
+-- Fecha: 2026-11-09 12:10:48 -03:00
+-- Comando: psql -w -h localhost -p 5432 -U postgres -d foodstore_copia_trabajo -v ON_ERROR_STOP=1 -f TP6_FNBC_Desnormalizacion/Parte2_Desnormalizacion/medir_top_categorias_antes.sql
+-- ============================================================================
+
+BEGIN
+ALTER TABLE
+ALTER TABLE
+ANALYZE
+ANALYZE
+                                                                                                                   QUERY PLAN                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6445.83..6445.84 rows=5 width=48) (actual time=142.887..148.740 rows=5 loops=1)
+   Output: c.id_categoria, c.nombre, (sum(((dp.cantidad)::numeric * dp.precio_unitario)))
+   Buffers: shared hit=4791 read=515
+   ->  Sort  (cost=6445.83..6445.84 rows=5 width=48) (actual time=142.884..148.737 rows=5 loops=1)
+         Output: c.id_categoria, c.nombre, (sum(((dp.cantidad)::numeric * dp.precio_unitario)))
+         Sort Key: (sum(((dp.cantidad)::numeric * dp.precio_unitario))) DESC
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=4791 read=515
+         ->  Finalize GroupAggregate  (cost=6437.40..6445.77 rows=5 width=48) (actual time=142.709..148.703 rows=5 loops=1)
+               Output: c.id_categoria, c.nombre, sum(((dp.cantidad)::numeric * dp.precio_unitario))
+               Group Key: c.id_categoria
+               Buffers: shared hit=4791 read=515
+               ->  Gather Merge  (cost=6437.40..6445.67 rows=5 width=48) (actual time=142.642..148.684 rows=5 loops=1)
+                     Output: c.id_categoria, c.nombre, (PARTIAL sum(((dp.cantidad)::numeric * dp.precio_unitario)))
+                     Workers Planned: 1
+                     Workers Launched: 1
+                     Buffers: shared hit=4791 read=515
+                     ->  Partial GroupAggregate  (cost=5437.39..5445.10 rows=5 width=48) (actual time=17.994..18.090 rows=2 loops=2)
+                           Output: c.id_categoria, c.nombre, PARTIAL sum(((dp.cantidad)::numeric * dp.precio_unitario))
+                           Group Key: c.id_categoria
+                           Buffers: shared hit=4791 read=515
+                           Worker 0:  actual time=0.026..0.026 rows=0 loops=1
+                             Buffers: shared hit=5
+                           ->  Merge Join  (cost=5437.39..5441.99 rows=305 width=26) (actual time=17.961..18.016 rows=274 loops=2)
+                                 Output: c.id_categoria, c.nombre, dp.cantidad, dp.precio_unitario
+                                 Inner Unique: true
+                                 Merge Cond: (pr.id_categoria = c.id_categoria)
+                                 Buffers: shared hit=4791 read=515
+                                 Worker 0:  actual time=0.025..0.025 rows=0 loops=1
+                                   Buffers: shared hit=5
+                                 ->  Sort  (cost=5436.28..5437.04 rows=305 width=18) (actual time=17.944..17.957 rows=274 loops=2)
+                                       Output: dp.cantidad, dp.precio_unitario, pr.id_categoria
+                                       Sort Key: pr.id_categoria
+                                       Sort Method: quicksort  Memory: 46kB
+                                       Buffers: shared hit=4790 read=515
+                                       Worker 0:  actual time=0.025..0.025 rows=0 loops=1
+                                         Sort Method: quicksort  Memory: 25kB
+                                         Buffers: shared hit=5
+                                       ->  Nested Loop  (cost=0.71..5423.69 rows=305 width=18) (actual time=0.117..17.814 rows=274 loops=2)
+                                             Output: dp.cantidad, dp.precio_unitario, pr.id_categoria
+                                             Inner Unique: true
+                                             Buffers: shared hit=4785 read=515
+                                             Worker 0:  actual time=0.003..0.003 rows=0 loops=1
+                                             ->  Nested Loop  (cost=0.42..5325.60 rows=305 width=18) (actual time=0.091..15.599 rows=274 loops=2)
+                                                   Output: dp.cantidad, dp.precio_unitario, dp.id_producto
+                                                   Buffers: shared hit=3277 read=382
+                                                   Worker 0:  actual time=0.003..0.003 rows=0 loops=1
+                                                   ->  Parallel Seq Scan on public.pedidos ped  (cost=0.00..3235.71 rows=305 width=8) (actual time=0.065..12.372 rows=274 loops=2)
+                                                         Output: ped.id_pedido
+                                                         Filter: ((NOT ped.eliminado) AND (ped.fecha_pedido >= '2026-06-25 00:00:00-03'::timestamp with time zone) AND (ped.fecha_pedido < '2026-06-26 00:00:00-03'::timestamp with time zone))
+                                                         Rows Removed by Filter: 99726
+                                                         Buffers: shared hit=1471
+                                                         Worker 0:  actual time=0.002..0.002 rows=0 loops=1
+                                                   ->  Index Scan using detalles_pedido_pkey on public.detalles_pedido dp  (cost=0.42..6.84 rows=1 width=26) (actual time=0.011..0.011 rows=1 loops=547)
+                                                         Output: dp.cantidad, dp.precio_unitario, dp.id_pedido, dp.id_producto
+                                                         Index Cond: (dp.id_pedido = ped.id_pedido)
+                                                         Filter: (NOT dp.eliminado)
+                                                         Buffers: shared hit=1806 read=382
+                                             ->  Index Scan using productos_pkey on public.productos pr  (cost=0.29..0.32 rows=1 width=16) (actual time=0.008..0.008 rows=1 loops=547)
+                                                   Output: pr.id_producto, pr.id_categoria, pr.nombre, pr.precio_actual, pr.stock, pr.activo, pr.fecha_creacion
+                                                   Index Cond: (pr.id_producto = dp.id_producto)
+                                                   Buffers: shared hit=1508 read=133
+                                 ->  Sort  (cost=1.11..1.12 rows=5 width=16) (actual time=0.030..0.031 rows=5 loops=1)
+                                       Output: c.id_categoria, c.nombre
+                                       Sort Key: c.id_categoria
+                                       Sort Method: quicksort  Memory: 25kB
+                                       Buffers: shared hit=1
+                                       ->  Seq Scan on public.categorias c  (cost=0.00..1.05 rows=5 width=16) (actual time=0.012..0.013 rows=5 loops=1)
+                                             Output: c.id_categoria, c.nombre
+                                             Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=196 read=20
+ Planning Time: 6.386 ms
+ Execution Time: 148.939 ms
+(74 filas)
+
+ROLLBACK

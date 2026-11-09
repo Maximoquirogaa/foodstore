@@ -1,0 +1,24 @@
+2026-11-09 12:11:38.086 -03 [21356] [desconocido]@[desconocido] 127.0.0.1(65388) [desconocido] LOG:  conexión recibida: host=127.0.0.1 port=65388
+2026-11-09 12:11:38.104 -03 [21356] postgres@foodstore_dev 127.0.0.1(65388) [desconocido] FATAL:  la autentificación password falló para el usuario «postgres»
+2026-11-09 12:11:38.104 -03 [21356] postgres@foodstore_dev 127.0.0.1(65388) [desconocido] DETALLE:  La conexión coincidió con el archivo «C:/Program Files/PostgreSQL/17/data/pg_hba.conf» línea 115: «host    all             all             127.0.0.1/32            scram-sha-256»
+2026-11-09 12:11:38.178 -03 [39876] [desconocido]@[desconocido] 127.0.0.1(65389) [desconocido] LOG:  conexión recibida: host=127.0.0.1 port=65389
+2026-11-09 12:11:38.201 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) [desconocido] LOG:  conexión autenticada: identidad=«postgres» método=scram-sha-256 (C:/Program Files/PostgreSQL/17/data/pg_hba.conf:115)
+2026-11-09 12:11:38.201 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) [desconocido] LOG:  conexión autorizada: usuario=postgres base_de_datos=foodstore_dev nombre_de_aplicación=psql
+2026-11-09 12:11:38.206 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) psql LOG:  sentencia: SELECT 'AUDITORIA_TEST_INICIO_B2' AS marca, clock_timestamp() AS ts;
+2026-11-09 12:11:38.207 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) psql LOG:  sentencia: SELECT id_usuario, nombre, apellido, correo_electronico, rol
+	FROM public.usuarios
+	WHERE activo = TRUE
+	ORDER BY id_usuario
+	LIMIT 3;
+2026-11-09 12:11:38.211 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) psql LOG:  sentencia: BEGIN;
+2026-11-09 12:11:38.212 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) psql LOG:  sentencia: INSERT INTO public.categorias (nombre, activo)
+	VALUES ('AuditoriaTestB2', TRUE)
+	RETURNING id_categoria;
+2026-11-09 12:11:38.217 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) psql LOG:  sentencia: UPDATE public.categorias
+	SET nombre = 'AuditoriaTestB2_Modificada'
+	WHERE nombre = 'AuditoriaTestB2'
+	RETURNING id_categoria;
+2026-11-09 12:11:38.218 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) psql LOG:  sentencia: ROLLBACK;
+2026-11-09 12:11:38.219 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) psql LOG:  sentencia: SELECT public.fn_autenticar('admin@foodstore.utn.edu.ar', 'clave_erronea_test') AS login_fallido;
+2026-11-09 12:11:38.465 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) psql LOG:  sentencia: SELECT 'AUDITORIA_TEST_FIN_B2' AS marca, clock_timestamp() AS ts;
+2026-11-09 12:11:38.466 -03 [39876] postgres@foodstore_dev 127.0.0.1(65389) psql LOG:  desconexión: duración de sesión: 0:00:00.305 usuario=postgres base=foodstore_dev host=127.0.0.1 port=65389

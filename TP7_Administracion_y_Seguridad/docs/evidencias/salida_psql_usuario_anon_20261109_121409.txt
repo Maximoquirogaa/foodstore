@@ -1,0 +1,32 @@
+BEGIN
+SET
+SET
+DO
+CREATE TABLE
+COMMENT
+INSERT 0 3
+   rol    |  mes_alta  | cantidad 
+----------+------------+----------
+ ADMIN    | 2026-11-01 |        1
+ VENDEDOR | 2026-11-01 |        1
+ USUARIO  | 2026-11-01 |        1
+(3 filas)
+
+   rol    |  mes_alta  | cantidad 
+----------+------------+----------
+ ADMIN    | 2026-11-01 |        1
+ VENDEDOR | 2026-11-01 |        1
+ USUARIO  | 2026-11-01 |        1
+(3 filas)
+
+   rol    |  mes_alta  | total_anonimizado | total_real 
+----------+------------+-------------------+------------
+ ADMIN    | 2026-11-01 |                 1 |          1
+ VENDEDOR | 2026-11-01 |                 1 |          1
+ USUARIO  | 2026-11-01 |                 1 |          1
+(3 filas)
+
+DO
+psql:TP7_Administracion_y_Seguridad/sql/usuario_anon.sql:131: NOTICE:  EQUIVALENCIA MATEMÁTICA DEMOSTRADA: 3 filas totales analizadas sin discrepancias.
+ROLLBACK
+PSQL_EXIT=0
