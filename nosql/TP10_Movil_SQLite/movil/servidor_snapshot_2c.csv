@@ -1,0 +1,5 @@
+id,nombre,precio_centavos,stock,disponible,eliminado,fecha_copia
+1,Hamburguesa Clásica,480000,50,t,f,2026-11-04 20:49:09.683399-03
+2,Hamburguesa Doble Queso,620000,35,t,f,2026-11-04 20:49:09.683399-03
+3,Papas Fritas Medianas,220000,100,f,t,2026-11-04 20:49:09.683399-03
+4,Gaseosa Cola 500ml,150000,80,t,f,2026-11-04 20:49:09.683399-03

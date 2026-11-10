@@ -1,0 +1,25 @@
+=== REPORTE OFICIAL DE REMEDICIÓN EN RONDAS INTERCALADAS (Q5) ===
+
+Ronda 1:
+- Baseline (arranque en frío): Execution Time = 795.568 ms (Batches: 5, Disk Usage: 1568kB)
+- Índice A propuesto (ignorado): Execution Time = 417.282 ms (Parallel Seq Scan, Batches: 5)
+- work_mem = 16MB (sin índice): Execution Time = 323.945 ms (Batches: 1, Disk Usage: 0kB)
+
+Ronda 2:
+- Baseline (caché caliente): Execution Time = 433.272 ms (Batches: 5, Disk Usage: 1568kB)
+- Índice A propuesto (ignorado): Execution Time = 409.968 ms (Parallel Seq Scan, Batches: 5)
+- work_mem = 16MB (sin índice): Execution Time = 306.372 ms (Batches: 1, Disk Usage: 0kB)
+
+Ronda 3:
+- Baseline (estabilizado): Execution Time = 385.951 ms (Batches: 5, Disk Usage: 1568kB)
+- Índice A propuesto (ignorado): Execution Time = 405.510 ms (Parallel Seq Scan, Batches: 5)
+- work_mem = 16MB (sin índice): Execution Time = 297.678 ms (Batches: 1, Disk Usage: 0kB)
+
+ANÁLISIS COMPARATIVO DE PROMEDIOS ESTABILIZADOS (Rondas 2 y 3):
+- Baseline: 409.6 ms
+- Índice A (candidato): 407.7 ms  --> Diferencia nula (-0.4%, ruido puro). El índice NO interviene.
+- work_mem = 16MB: 302.0 ms       --> Mejora sólida de ~26.3% con erradicación del spill a disco.
+
+DECISIÓN FINAL:
+- Índice A (pedidos): DESCARTADO POR SOBREINDEXACIÓN Y SELECTIVIDAD INSUFICIENTE.
+- work_mem = 16MB: ACEPTADO COMO AJUSTE DE SESIÓN PARA REPORTES ANALÍTICOS.

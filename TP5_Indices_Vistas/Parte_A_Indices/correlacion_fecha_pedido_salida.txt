@@ -1,0 +1,10 @@
+ tablename |   columna    |  correlation  
+-----------+--------------+---------------
+ pedidos   | fecha_pedido |  0.0051284729
+(1 row)
+
+CONCLUSIÓN TÉCNICA:
+La correlación física es prácticamente nula (0.0051 ≈ 0). 
+Para que un índice BRIN (Block Range Index) sea efectivo, la correlación debe ser muy cercana a +1 o -1 (los bloques de disco deben almacenar fechas crecientes o decrecientes de manera monótona). 
+Al haberse generado los datos de pedidos con fechas aleatorias en el último año, el rango de fechas en cada página física abarca casi todo el espectro, por lo que un índice BRIN no puede podar ningún bloque. 
+SE DESCARTA EL ÍNDICE BRIN POR INEFICACIA MATEMÁTICA DEMOSTRADA.

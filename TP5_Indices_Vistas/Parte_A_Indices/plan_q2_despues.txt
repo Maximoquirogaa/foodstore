@@ -1,0 +1,5 @@
+Index Scan using idx_productos_categoria_precio on productos  (cost=0.41..185.12 rows=4460 width=36) (actual time=0.024..0.245 rows=4460 loops=1)
+  Index Cond: ((id_categoria = 1) AND (precio_actual >= '1000'::numeric) AND (precio_actual <= '3000'::numeric))
+  Buffers: shared hit=42
+Planning Time: 0.142 ms
+Execution Time: 0.281 ms

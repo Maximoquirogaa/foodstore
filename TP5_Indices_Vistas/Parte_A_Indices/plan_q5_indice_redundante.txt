@@ -1,0 +1,18 @@
+=== 1. Búsqueda por id_pedido solo con la PK compuesta ===
+Index Scan using detalles_pedido_pkey on detalles_pedido  (cost=0.42..8.44 rows=3 width=32) (actual time=0.015..0.018 rows=3 loops=1)
+  Index Cond: (id_pedido = 100)
+  Buffers: shared hit=4
+Planning Time: 0.082 ms
+Execution Time: 0.031 ms
+
+EVIDENCIA CLAVE:
+Al ejecutar WHERE id_pedido = 100, PostgreSQL utiliza automáticamente la clave primaria compuesta (detalles_pedido_pkey) mediante Index Scan en 0.031 ms. 
+No se requiere ningún índice adicional porque id_pedido es la columna líder del árbol B.
+
+=== 2. Consulta Q5 con índice redundante aplicado en transacción ===
+Execution Time con candidato redundante: 615.608 ms (Parallel Seq Scan mantenido, el índice no se usa).
+Execution Time sin candidato redundante: 612.285 ms (Parallel Seq Scan idéntico).
+
+CONCLUSIÓN:
+Crear idx_detalles_id_pedido_redundante no aporta absolutamente ninguna mejora a las consultas analíticas masivas y duplica inútilmente la estructura que ya provee la PK.
+SE DESCARTA POR SOBREINDEXACIÓN REDUNDANTE.

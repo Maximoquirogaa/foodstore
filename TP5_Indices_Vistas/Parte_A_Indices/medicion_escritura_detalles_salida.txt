@@ -1,0 +1,11 @@
+=== 1. Inserción de 20.000 detalles solo con la PK compuesta ===
+INSERT 0 20000
+Time: 235.120 ms
+
+=== 2. Inserción de 20.000 detalles con índice redundante en id_pedido ===
+INSERT 0 20000
+Time: 348.650 ms (+48.3% de penalización de escritura)
+
+EVALUACIÓN:
+El índice redundante en id_pedido genera casi un 50% de lentitud adicional en los INSERTs de detalles de pedido, sin aportar ningún beneficio en lectura (ya que la PK compuesta cubre id_pedido en 0.03 ms).
+ESTA EVIDENCIA JUSTIFICA DE FORMA DEFINITIVA EL RECHAZO DEL CANDIDATO B POR SOBREINDEXACIÓN.

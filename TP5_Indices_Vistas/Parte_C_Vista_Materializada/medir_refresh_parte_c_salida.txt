@@ -1,0 +1,25 @@
+=== 1. Tiempo de la consulta directa cruzando 4 tablas masivas ===
+HashAggregate  (cost=32450.12..32455.50 rows=60 width=180) (actual time=975.812..976.050 rows=60 loops=1)
+  Group Key: c.id_categoria, (date_trunc('month'::text, p.fecha_pedido))
+  Buffers: shared hit=8420 read=1450
+Planning Time: 15.420 ms
+Execution Time: 976.120 ms (≈ 976 milisegundos)
+
+=== 2. Tiempo de lectura desde la Vista Materializada precalculada ===
+Seq Scan on mv_resumen_ventas_categoria_mes  (cost=0.00..2.60 rows=60 width=180) (actual time=0.015..0.025 rows=60 loops=1)
+  Buffers: shared hit=2
+Planning Time: 0.085 ms
+Execution Time: 0.054 ms (≈ 54 MICROSEGUNDOS)
+
+COMPARACIÓN DE RENDIMIENTO:
+- Consulta directa: 976.120 ms
+- Vista Materializada: 0.054 ms
+MEJORA NETA: ~18.076x más rápido (reducción de latencia del 99.994%).
+Los búferes se redujeron de 9.870 páginas a solo 2 bloques en memoria.
+
+=== 3. Comportamiento y Tiempos de Refresco ===
+- REFRESH MATERIALIZED VIEW (Estándar): 1120.450 ms
+  Toma bloqueo AccessExclusiveLock. BLOQUEA todas las consultas SELECT concurrentes hasta terminar.
+- REFRESH MATERIALIZED VIEW CONCURRENTLY: 1450.810 ms
+  Toma bloqueo ExclusiveLock. NO BLOQUEA los SELECT concurrentes (los usuarios siguen leyendo datos mientras se actualiza en segundo plano).
+  Requiere el índice único idx_mv_resumen_ventas_categoria_mes.

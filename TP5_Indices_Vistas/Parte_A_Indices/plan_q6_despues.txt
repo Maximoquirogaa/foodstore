@@ -1,0 +1,26 @@
+-- Plan Q6 DESPUÉS de aplicar el índice cubriente
+-- CREATE INDEX idx_productos_categoria_precio_activo ON productos (id_categoria, precio_actual DESC) WHERE activo = TRUE;
+-- Medición tras VACUUM ANALYZE sobre base masiva Food Store
+
+Sort  (cost=7845210.00..7845272.50 rows=25000 width=36) (actual time=158728.115..158733.410 rows=24810 loops=1)
+  Sort Key: cat.id_categoria, p.precio_actual DESC
+  ->  Hash Join  (cost=14.16..7843295.12 rows=25000 width=36) (actual time=3.120..158700.120 rows=24810 loops=1)
+        Hash Cond: (p.id_categoria = cat.id_categoria)
+        ->  Seq Scan on productos p  (cost=0.00..7842565.00 rows=25000 width=36) (actual time=3.080..158670.210 rows=24810 loops=1)
+              Filter: (activo AND (precio_actual > (SubPlan 1)))
+              Rows Removed by Filter: 25193
+              SubPlan 1
+                ->  Aggregate  (cost=156.84..156.85 rows=1 width=32) (actual time=3.170..3.170 rows=1 loops=50003)
+                      ->  Index Only Scan using idx_productos_categoria_precio_activo on productos p2  (cost=0.41..131.84 rows=10000 width=6) (actual time=0.012..1.850 rows=10000 loops=50003)
+                            Index Cond: (id_categoria = p.id_categoria)
+                            Heap Fetches: 0
+        ->  Hash  (cost=14.10..14.10 rows=5 width=8) (actual time=0.038..0.038 rows=5 loops=1)
+              ->  Seq Scan on categorias cat  (cost=0.00..14.10 rows=5 width=8) (actual time=0.018..0.025 rows=5 loops=1)
+                    Filter: activo
+Planning Time: 0.315 ms
+Execution Time: 158728.620 ms (≈ 158.7 segundos)
+
+DIAGNÓSTICO TÉCNICO:
+- La subconsulta pasó de Seq Scan (271.2 s) a Index Only Scan con Heap Fetches: 0 (158.7 s), logrando ~41.5% de mejora.
+- A pesar de la aceleración, 158 segundos sigue siendo inviable para producción. La causa es algorítmica: el SubPlan 1 se ejecuta 50.003 veces (loops=50003). 
+- La solución real es la reescritura con pre-agregación (JOIN/CTE), que resuelve la consulta en menos de 45 ms.

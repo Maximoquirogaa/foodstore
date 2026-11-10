@@ -1,0 +1,17 @@
+-- Plan Q6 ANTES de aplicar el índice cubriente
+Sort  (cost=12550145.00..12550207.50 rows=25000 width=36) (actual time=271205.120..271210.450 rows=24810 loops=1)
+  Sort Key: cat.id_categoria, p.precio_actual DESC
+  ->  Hash Join  (cost=14.16..12548230.12 rows=25000 width=36) (actual time=5.412..271180.115 rows=24810 loops=1)
+        Hash Cond: (p.id_categoria = cat.id_categoria)
+        ->  Seq Scan on productos p  (cost=0.00..12547500.00 rows=25000 width=36) (actual time=5.350..271150.210 rows=24810 loops=1)
+              Filter: (activo AND (precio_actual > (SubPlan 1)))
+              Rows Removed by Filter: 25193
+              SubPlan 1
+                ->  Aggregate  (cost=250.94..250.95 rows=1 width=32) (actual time=5.420..5.420 rows=1 loops=50003)
+                      ->  Seq Scan on productos p2  (cost=0.00..225.00 rows=10000 width=6) (actual time=0.015..3.810 rows=10000 loops=50003)
+                            Filter: (activo AND (id_categoria = p.id_categoria))
+        ->  Hash  (cost=14.10..14.10 rows=5 width=8) (actual time=0.042..0.042 rows=5 loops=1)
+              ->  Seq Scan on categorias cat  (cost=0.00..14.10 rows=5 width=8) (actual time=0.021..0.035 rows=5 loops=1)
+                    Filter: activo
+Planning Time: 0.285 ms
+Execution Time: 271205.850 ms (≈ 271.2 segundos)

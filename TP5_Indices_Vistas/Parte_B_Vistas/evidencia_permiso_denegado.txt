@@ -1,0 +1,14 @@
+﻿foodstore_TP5=> SET ROLE TP5_reportes;
+SET
+foodstore_TP5=> SELECT * FROM usuarios;
+ERROR:  permiso denegado para la tabla usuarios
+foodstore_TP5=> SELECT * FROM pedidos;
+ERROR:  permiso denegado para la tabla pedidos
+foodstore_TP5=> SELECT * FROM clientes;
+ERROR:  permiso denegado para la tabla clientes
+foodstore_TP5=> RESET ROLE;
+RESET
+
+EVIDENCIA CONFIRMADA:
+El rol TP5_reportes no tiene acceso a las tablas físicas base, garantizando el principio de mínimo privilegio y encapsulamiento de datos sensibles.
+

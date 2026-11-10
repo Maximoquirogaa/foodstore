@@ -1,0 +1,34 @@
+=== RONDA 1 - BASELINE (Sin índice) ===
+Sort Method: quicksort  Memory: 432kB
+Buffers: shared hit=443
+Execution Time: 4.921 ms
+
+=== RONDA 1 - CON ÍNDICE (En transacción) ===
+Index Scan using idx_productos_categoria_precio on productos
+Buffers: shared hit=42
+Execution Time: 0.281 ms
+
+=== RONDA 2 - BASELINE (Sin índice) ===
+Sort Method: quicksort  Memory: 432kB
+Buffers: shared hit=443
+Execution Time: 4.654 ms
+
+=== RONDA 2 - CON ÍNDICE (En transacción) ===
+Index Scan using idx_productos_categoria_precio on productos
+Buffers: shared hit=42
+Execution Time: 0.274 ms
+
+=== RONDA 3 - BASELINE (Sin índice) ===
+Sort Method: quicksort  Memory: 432kB
+Buffers: shared hit=443
+Execution Time: 4.582 ms
+
+=== RONDA 3 - CON ÍNDICE (En transacción) ===
+Index Scan using idx_productos_categoria_precio on productos
+Buffers: shared hit=42
+Execution Time: 0.271 ms
+
+PROMEDIOS:
+- Baseline (Seq Scan + Sort): 4.719 ms
+- Con Índice B-Tree Compuesto: 0.275 ms
+MEJORA NETA: ~17.1x más rápido con reducción del 90.5% en búferes leídos (443 -> 42 bloques).

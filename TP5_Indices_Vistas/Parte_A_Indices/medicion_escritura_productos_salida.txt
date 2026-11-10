@@ -1,0 +1,16 @@
+=== 1. Inserción de 10.000 filas SIN índices secundarios ===
+INSERT 0 10000
+Time: 115.421 ms
+
+=== 2. Inserción de 10.000 filas CON 1 índice secundario ===
+INSERT 0 10000
+Time: 154.120 ms (+33.5% de sobrecosto de escritura)
+
+=== 3. Inserción de 10.000 filas CON 2 índices secundarios ===
+INSERT 0 10000
+Time: 198.815 ms (+72.2% de sobrecosto de escritura respecto a la base limpia)
+
+HALLAZGO DE ARQUITECTURA:
+Cada índice adicional requiere que el motor actualice en disco las páginas del árbol B por cada fila insertada, además de verificar bloqueos de concurrencia y páginas divididas (page splits).
+El sobrecosto de escritura escala de forma directamente proporcional al número de índices secundarios.
+Por ello, NUNCA se deben crear índices "por si acaso" sin una justificación estricta en el plan de ejecución de lectura.

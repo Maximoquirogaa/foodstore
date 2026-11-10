@@ -1,0 +1,28 @@
+﻿=== 1. Verificar columnas de v_usuario_publico ===
+    column_name     |          data_type          
+--------------------+-----------------------------
+ id_usuario         | bigint
+ nombre             | character varying
+ apellido           | character varying
+ correo_electronico | character varying
+ telefono           | character varying
+ rol                | USER-DEFINED
+ fecha_creacion     | timestamp with time zone
+(7 rows)
+(CONFIRMADO: La columna contrasena NO está presente).
+
+=== 2. Comprobación de Privilegios con SET ROLE TP5_reportes ===
+SELECT sobre v_usuario_publico: OK (2 rows)
+SELECT sobre v_reporte_ventas_cliente: OK (2 rows)
+SELECT sobre v_catalogo_productos: OK (2 rows)
+SELECT sobre v_detalle_pedido_producto: OK (2 rows)
+SELECT sobre v_pedido_cliente: OK (2 rows)
+SELECT sobre mv_resumen_ventas_categoria_mes: OK (2 rows)
+
+=== 3. Comprobación Formal de Equivalencia con EXCEPT ===
+3.1 v_catalogo_productos: (0 rows)
+3.2 v_detalle_pedido_producto: (0 rows)
+3.3 v_pedido_cliente: (0 rows)
+
+TODAS LAS PRUEBAS DE EQUIVALENCIA DIERON 0 FILAS DE DISCREPANCIA.
+

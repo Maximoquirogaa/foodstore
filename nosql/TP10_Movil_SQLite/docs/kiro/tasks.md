@@ -1,0 +1,30 @@
+# Plan de Tareas de Implementación (Kiro Tasks)
+
+- [x] **Tarea 1: Modelado de Tablas Móviles en SQLite**
+  - [x] Diseñar `schema_sqlite.sql` con `PRAGMA foreign_keys = ON;` y tablas `STRICT`.
+  - [x] Configurar tipos enteros en centavos para precios monetarios.
+  - [x] Configurar enumeraciones cerradas (`CHECK`) para formas de pago y estados.
+- [x] **Tarea 2: Pruebas Unitarias de Transacciones y Restricciones**
+  - [x] Verificar persistencia con `BEGIN ... COMMIT`.
+  - [x] Verificar reversión limpia con `BEGIN ... ROLLBACK`.
+  - [x] Implementar consulta de catálogo offline (Caso C1).
+  - [x] Validar rechazo de cantidad 0 y clave foránea inexistente (Caso C7).
+- [x] **Tarea 3: Extracción e Importación de Instantáneas**
+  - [x] Crear vista `v_snapshot_movil` en PostgreSQL.
+  - [x] Exportar e importar CSV `servidor_snapshot.csv` en `snapshot_servidor`.
+  - [x] Diseñar recarga atómica con UPSERT `ON CONFLICT DO UPDATE`.
+- [x] **Tarea 4: Lógica de Sincronización del Semáforo**
+  - [x] Diseñar script `semaforo.sql` con tabla temporal de agregación.
+  - [x] Programar precedencia Rojo (`RECHAZADO`), Amarillo (`CONFLICTO`) y Verde (`SIMULADO_APROBADO`).
+  - [x] Verificar que solo se procesen solicitudes `PENDIENTE`.
+- [x] **Tarea 5: Ejecución y Validación de Casos C2 a C6**
+  - [x] Probar Caso C2 (Cambio de precio y resolución).
+  - [x] Probar Caso C3 (Stock insuficiente).
+  - [x] Probar Caso C4 (Baja lógica).
+  - [x] Probar Caso C5 (Aprobación sin cambios).
+  - [x] Probar Caso C6 (Protección ante UUID repetido).
+- [x] **Tarea 6: Integración y Cierre de Capa de Datos**
+  - [x] Diagramar mapa tri-motor (PostgreSQL + MongoDB + SQLite).
+  - [x] Redactar plan de mantenimiento y recuperación ampliado.
+  - [x] Conducir code review exhaustivo con IA de los 75 scripts de la cursada.
+  - [x] Compilar PDF oficial de entrega con ReportLab.

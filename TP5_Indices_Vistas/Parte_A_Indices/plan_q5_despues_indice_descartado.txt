@@ -1,0 +1,30 @@
+-- Plan con el índice idx_pedidos_cliente_q5 creado dentro de transacción
+-- EL ÍNDICE NO APARECE EN NINGÚN NODO DEL PLAN
+WindowAgg  (cost=18521.53..18771.55 rows=20000 width=72) (actual time=495.210..522.410 rows=20000 loops=1)
+  ->  Sort  (cost=18521.53..18571.53 rows=20000 width=64) (actual time=495.190..502.115 rows=20000 loops=1)
+        Sort Key: (sum((dp.cantidad * dp.precio_unitario))) DESC
+        ->  Finalize HashAggregate  (cost=16521.50..17021.50 rows=20000 width=64) (actual time=410.115..450.112 rows=20000 loops=1)
+              Group Key: c.id_cliente
+              Batches: 5  Memory Usage: 10249kB  Disk Usage: 1568kB
+              ->  Gather  (cost=12020.81..16221.45 rows=40000 width=40) (actual time=288.115..378.120 rows=52340 loops=1)
+                    Workers Planned: 2  Workers Launched: 2
+                    ->  Partial HashAggregate
+                          Batches: 5  Memory Usage: 8192kB  Disk Usage: 512kB
+                          ->  Hash Join
+                                Hash Cond: (p.id_cliente = c.id_cliente)
+                                ->  Parallel Hash Join
+                                      Hash Cond: (dp.id_pedido = p.id_pedido)
+                                      ->  Parallel Seq Scan on detalles_pedido dp
+                                      ->  Parallel Hash
+                                            ->  Parallel Seq Scan on pedidos p
+                                                Filter: None (Se leen los 200.000 pedidos completos)
+                                ->  Hash
+                                      ->  Seq Scan on clientes c
+Planning Time: 12.314 ms
+Execution Time: 482.216 ms (Ronda 1: 417.282 ms, Ronda 2: 409.968 ms, Ronda 3: 405.510 ms)
+Buffers: shared hit=6420 read=124, temp read=260 written=260
+
+EVALUACIÓN:
+El índice idx_pedidos_cliente_q5 fue ignorado por el motor (se mantiene Parallel Seq Scan en pedidos). 
+El tiempo medio es equivalente al baseline una vez que la caché se estabiliza.
+SE DESCARTA POR INUTILIDAD OPERATIVA Y SOBREINDEXACIÓN.

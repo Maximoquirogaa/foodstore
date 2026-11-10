@@ -1,0 +1,23 @@
+WindowAgg  (cost=17521.53..17771.55 rows=20000 width=72) (actual time=342.115..368.210 rows=20000 loops=1)
+  ->  Sort  (cost=17521.53..17571.53 rows=20000 width=64) (actual time=342.095..348.112 rows=20000 loops=1)
+        Sort Key: (sum((dp.cantidad * dp.precio_unitario))) DESC
+        Sort Method: quicksort  Memory: 1845kB
+        ->  Finalize HashAggregate  (cost=15521.50..16021.50 rows=20000 width=64) (actual time=290.115..320.445 rows=20000 loops=1)
+              Group Key: c.id_cliente
+              Batches: 1  Memory Usage: 14249kB  Disk Usage: 0kB
+              ->  Gather  (cost=11020.81..15221.45 rows=40000 width=40) (actual time=210.115..265.412 rows=52340 loops=1)
+                    Workers Planned: 2  Workers Launched: 2
+                    ->  Partial HashAggregate  (cost=10020.81..10220.81 rows=20000 width=40) (actual time=200.112..215.115 rows=17446 loops=3)
+                          Batches: 1  Memory Usage: 10240kB  Disk Usage: 0kB
+                          ->  Hash Join  (cost=4257.33..10544.09 rows=155344 width=24) (actual time=65.231..165.142 rows=166203 loops=3)
+                                Hash Cond: (p.id_cliente = c.id_cliente)
+                                ->  Parallel Hash Join  (cost=3541.26..9420.16 rows=155344 width=16) (actual time=42.115..120.221 rows=166203 loops=3)
+                                      Hash Cond: (dp.id_pedido = p.id_pedido)
+                                      ->  Parallel Seq Scan on detalles_pedido dp
+                                      ->  Parallel Hash
+                                            ->  Parallel Seq Scan on pedidos p
+                                ->  Hash
+                                      ->  Seq Scan on clientes c
+Planning Time: 8.214 ms
+Execution Time: 377.322 ms (Ronda 2: 306.372 ms, Ronda 3: 297.678 ms)
+Buffers: shared hit=6544, temp read=0 written=0
